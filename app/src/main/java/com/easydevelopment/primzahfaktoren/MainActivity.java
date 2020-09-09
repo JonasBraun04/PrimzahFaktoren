@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,10 +18,13 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     EditText input;
     TextView output;
+    TextView table;
+    Button button;
     CheckBox toggleMode;
     String outputText;
     int i;
     int counter;
+    boolean mode = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         input = findViewById(R.id.inputNumber);
         output = findViewById(R.id.output);
         toggleMode = findViewById(R.id.potenzMode);
+        button = findViewById(R.id.changeMode);
+        table = findViewById(R.id.primeNumberTable);
 
         input.addTextChangedListener(new TextWatcher() {
             @Override
@@ -52,6 +58,27 @@ public class MainActivity extends AppCompatActivity {
                 updateDisplay();
             }
         });
+
+        button.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if(mode) {
+                   input.setVisibility(View.GONE);
+                   output.setVisibility(View.GONE);
+                   toggleMode.setVisibility(View.GONE);
+                   table.setVisibility(View.VISIBLE);
+                   mode=!mode;
+               } else {
+                   input.setVisibility(View.VISIBLE);
+                   output.setVisibility(View.VISIBLE);
+                   toggleMode.setVisibility(View.VISIBLE);
+                   table.setVisibility(View.GONE);
+                   mode=!mode;
+               }
+           }
+        });
+
+
     }
 
     public void updateDisplay() {
